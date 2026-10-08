@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дублёр — обезличенные копии баз для тестовых сред</title>
+<meta name="description" content="Дублёр находит персональные данные в колонках, комментариях и JSON и подменяет их правдоподобными значениями, сохраняя связи между таблицами. Открытое ядро, PostgreSQL и MySQL, запуск за час.">
+<meta name="theme-color" content="#f3f4f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0e16" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Превью в соцсетях и мессенджерах. Когда появится домен, добавьте og:url и og:image с абсолютным адресом — см. README -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Дублёр">
+<meta property="og:title" content="Дублёр — копия базы без единого настоящего клиента">
+<meta property="og:description" content="Обезличивание баз для тестовых сред: находит ПДн даже в комментариях и JSON, сохраняет формат, падежи и связи между таблицами.">
+<meta name="twitter:card" content="summary">
+
+<link rel="preload" href="fonts/geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<script src="boot.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="bar" id="bar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Дублёр, наверх">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect class="back" x="2.5" y="2.5" width="13" height="13" rx="3.5"/><rect class="front" x="8.5" y="8.5" width="13" height="13" rx="3.5"/></svg>
+      Дублёр
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#demo">Демо</a><a href="#features">Возможности</a><a href="#how">Как работает</a><a href="#plans">Тарифы</a>
+    </nav>
+    <button class="theme" id="themeBtn" type="button" aria-label="Сменить тему">
+      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></svg>
+    </button>
+    <a class="btn sm" href="#contact">Связаться</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Обезличивание баз для тестовых сред</span>
+        <h1>Копия базы, в&nbsp;которой нет ни&nbsp;одного <span class="hl">настоящего клиента</span></h1>
+        <p class="lead">Дублёр подключается к&nbsp;реплике и&nbsp;за&nbsp;час собирает обезличенную копию. Он находит персональные данные в&nbsp;колонках, комментариях и&nbsp;JSON, подменяет их правдоподобными значениями и&nbsp;сохраняет связи между таблицами.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contact">Обсудить пилот <span class="arr" aria-hidden="true">→</span></a>
+          <div class="cmd"><code id="cmdText"><b>$</b> dubler init --db postgres://replica/shop</code><button class="copy" id="copyBtn" type="button">Копировать</button></div>
+        </div>
+        <ul class="facts">
+          <li>Данные не покидают ваш контур</li>
+          <li>Запуск за час</li>
+          <li>Открытое ядро</li>
+        </ul>
+      </div>
+
+      <div class="cast" role="img" aria-label="Запись клиента в рабочей базе и её дублёр в тестовой: Петров Алексей стал Смирновым Ильёй, телефон и ИНН заменены с сохранением формата, фамилия в комментарии — в том же падеже">
+        <article class="card orig" aria-hidden="true">
+          <header><span class="pin"></span>Оригинал<span class="env">prod · clients #1042</span></header>
+          <dl>
+            <div><dt>fio</dt><dd><span class="real">Петров Алексей Ильич</span></dd></div>
+            <div><dt>phone</dt><dd><span class="real">+7 916 555-12-34</span></dd></div>
+            <div><dt>inn</dt><dd><span class="real">500312441759</span></dd></div>
+            <div><dt>comment</dt><dd><span>Перезвонить <span class="real">Петрову</span> после 18:00</span></dd></div>
+          </dl>
+        </article>
+        <article class="card dbl" aria-hidden="true">
+          <header>
+            <svg viewBox="0 0 24 24"><rect fill="none" stroke="currentColor" stroke-width="2" x="2.5" y="2.5" width="13" height="13" rx="3.5"/><rect fill="currentColor" x="8.5" y="8.5" width="13" height="13" rx="3.5"/></svg>
+            Дублёр<span class="env">staging · clients #1042</span>
+          </header>
+          <dl>
+            <div><dt>fio</dt><dd><mark>Смирнов Илья Павлович</mark></dd></div>
+            <div><dt>phone</dt><dd><mark>+7 916 382-90-47</mark><em>формат</em></dd></div>
+            <div><dt>inn</dt><dd><mark>771809352629</mark><em>✓ ФНС</em></dd></div>
+            <div><dt>comment</dt><dd><span>Перезвонить <mark>Смирнову</mark> после 18:00</span><em>дат. п.</em></dd></div>
+          </dl>
+          <footer><span>HMAC · 9f3c…e1a7</span><span>связи сохранены</span></footer>
+        </article>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <ul class="strip" aria-label="Совместимость">
+        <li class="strip-k">Работает с</li>
+        <li>PostgreSQL</li><li>MySQL</li><li>GitHub Actions</li><li>GitLab CI</li><li>правила в YAML</li><li>отчёт по приказу РКН №140</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="blk" id="demo">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow"><i>01</i>Демо</span><h2>Одна запись — три способа отдать её&nbsp;в&nbsp;тест</h2></div>
+        <p>Обычная маска закрывает колонки, но не видит фамилию в комментарии и паспорт в JSON. Переключите режим и посмотрите, что уходит на стенд.</p>
+      </div>
+
+      <div class="demo rv">
+        <div class="modes" role="group" aria-label="Способ подготовить копию">
+          <button class="mode" type="button" data-mode="raw" aria-pressed="false">
+            <span class="m-num">01</span>
+            <span class="m-body"><b>Копия как есть</b><span class="m-text">Так делает почти половина компаний</span></span>
+            <span class="m-stat bad">8<small>открыто</small></span>
+            <i class="m-timer" aria-hidden="true"></i>
+          </button>
+          <button class="mode" type="button" data-mode="column" aria-pressed="false">
+            <span class="m-num">02</span>
+            <span class="m-body"><b>Маска по колонкам</b><span class="m-text">Колонки закрыты, свободный текст — нет</span></span>
+            <span class="m-stat bad">5<small>открыто</small></span>
+            <i class="m-timer" aria-hidden="true"></i>
+          </button>
+          <button class="mode" type="button" data-mode="dubler" aria-pressed="false">
+            <span class="m-num">03</span>
+            <span class="m-body"><b>Дублёр</b><span class="m-text">Подменено всё, включая комментарии и JSON</span></span>
+            <span class="m-stat good">0<small>открыто</small></span>
+            <i class="m-timer" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="spec-col">
+          <div class="spec" aria-label="Пример записи из базы">
+            <div class="spec-head">
+              <span class="tbl"><b>public.clients</b> · id = 1042</span>
+              <span class="swatches" aria-hidden="true"><span><i class="sw raw"></i>ПДн</span><span><i class="sw leak"></i>утечка</span><span><i class="sw masked"></i>подмена</span></span>
+            </div>
+            <div class="rec" id="rec"></div>
+            <div class="spec-foot">
+              <div><span>Найдено ПДн</span><b id="sFound">8</b></div>
+              <div><span>Заменено</span><b id="sDone">0</b></div>
+              <div><span>Открыто</span><b id="sLeak" class="bad">8</b></div>
+            </div>
+          </div>
+          <p class="spec-cap" id="specCap" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="why">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow"><i>02</i>Зачем</span><h2>Реальные клиенты лежат на&nbsp;тестовых стендах</h2></div>
+        <p>Настоящие ФИО, телефоны и паспорта оказываются на ноутбуках у разработчиков, тестировщиков и подрядчиков. Инструменты для маскирования есть, но ими почти никто не пользуется.</p>
+      </div>
+      <div class="stats">
+        <div class="stat rv">
+          <div class="big">≈50<small>%</small></div>
+          <p>российских компаний регулярно переносят в тестовые среды копии рабочих баз без изменений<sup class="ref"><a href="#src-1">1</a></sup></p>
+          <div class="half" role="img" aria-label="Почти половина"><i></i></div>
+        </div>
+        <div class="stat rv" style="--d:1">
+          <div class="big">3,1<small>%</small></div>
+          <p>применяют специализированные средства маскирования<sup class="ref"><a href="#src-1">1</a></sup></p>
+          <div class="waffle" id="waffle" role="img" aria-label="3 из 100 компаний"></div>
+          <div class="legend">одна клетка — 1% компаний</div>
+        </div>
+        <div class="stat rv" style="--d:2">
+          <div class="big">5<small>млн ₽</small></div>
+          <p>максимальный штраф для юрлица уже при утечке 1–10 тысяч записей<sup class="ref"><a href="#src-2">2</a></sup></p>
+          <p class="note">С 1 сентября 2025 действует приказ РКН №140 о методах обезличивания. Сырые ПДн в тестах разборы называют недопустимыми<sup class="ref"><a href="#src-3">3</a></sup></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="features">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow"><i>03</i>Возможности</span><h2>Данные, которые не&nbsp;отличить от&nbsp;настоящих</h2></div>
+        <p>Тесты, валидаторы и интерфейсы продолжают работать. Полнота важнее точности: пропущенная фамилия — утечка, лишняя замена — просто неудобство.</p>
+      </div>
+
+      <div class="bento">
+        <article class="tile t-text rv">
+          <span class="kicker">Главная функция</span>
+          <h3>Колонку «phone» найдёт любой. Телефон в&nbsp;заметке менеджера — нет</h3>
+          <p>Готовые модели распознавания обучены на новостях. В комментариях из CRM, без пунктуации и с сокращениями, их качество падает в разы. Мы дообучаем модели на синтетике и ручной разметке и ведём открытый бенчмарк «грязных» русских текстов.</p>
+          <p class="crm"><span class="src">orders.comment</span>звонила жена <mark>марина<sup>ИМЯ</sup></mark> просила перезвонить <mark>петрову<sup>ФИО</sup></mark> после 18 тел <mark>89035554321<sup>ТЕЛ</sup></mark> паспорт скинет на почту</p>
+          <figure class="dumb">
+            <div class="dumb-leg" aria-hidden="true"><span><i class="from"></i>готовая модель</span><span><i class="to"></i>после дообучения</span></div>
+            <div class="dumb-plot" role="img" aria-label="F1 распознавания: имена 0,43 у готовой модели и 0,93 после дообучения; адреса 0,06 и 0,91">
+              <div class="dumb-row" style="--a:.43;--b:.93"><span class="dumb-k">Имена</span><i class="stem"></i><span class="pt from" data-v="0,43"></span><span class="pt to" data-v="0,93"></span></div>
+              <div class="dumb-row" style="--a:.06;--b:.91"><span class="dumb-k">Адреса</span><i class="stem"></i><span class="pt from" data-v="0,06"></span><span class="pt to" data-v="0,91"></span></div>
+              <div class="dumb-axis" aria-hidden="true"><span style="--x:0">0</span><span style="--x:.25">0,25</span><span style="--x:.5">0,5</span><span style="--x:.75">0,75</span><span style="--x:1">1</span></div>
+            </div>
+            <figcaption>F1 на русских бизнес-данных, данные Just AI о Jay Guard<sup class="ref"><a href="#src-4">4</a></sup>. Наши цели на открытом бенчмарке: полнота ≥&nbsp;0,90 для форматных ПДн и ≥&nbsp;0,93 для имён в платной модели.</figcaption>
+          </figure>
+        </article>
+
+        <article class="tile t-inn rv" style="--d:1">
+          <span class="kicker">ИНН · СНИЛС · карты</span>
+          <h3>Верные контрольные суммы</h3>
+          <p>Подмены проходят проверку по алгоритмам ФНС, СФР и Луна. Валидаторы в коде не падают.</p>
+          <div class="ex" id="innDemo"></div>
+        </article>
+
+        <article class="tile t-case rv" style="--d:2">
+          <span class="kicker">Падежи</span>
+          <h3>Склонение как в оригинале</h3>
+          <p>Подмена встаёт в тот же падеж, и текст остаётся естественным.</p>
+          <div class="ex">
+            <div class="ln"><span class="from">Перезвонить Петрову</span><span class="ar">→</span><span class="to">Смирнову</span><span class="case">дат.</span></div>
+            <div class="ln"><span class="from">Договор у Петровой</span><span class="ar">→</span><span class="to">Смирновой</span><span class="case">род.</span></div>
+            <div class="ln"><span class="from">Петров А.&nbsp;И.</span><span class="ar">→</span><span class="to">Смирнов И.&nbsp;П.</span><span class="case">иниц.</span></div>
+          </div>
+        </article>
+
+        <article class="tile t-hmac rv">
+          <span class="kicker">Детерминированность</span>
+          <h3>Один человек — одна подмена</h3>
+          <p>Значение подменяется через HMAC с вашим ключом. «Петров» становится «Смирновым» во всех таблицах и при каждом запуске, а без ключа исходник не восстановить.</p>
+          <div class="ex det">
+            <span class="src">clients.fio</span><span class="val">Петров Алексей</span><span class="ar">→</span><span class="to">Смирнов Илья</span>
+            <span class="src">orders.comment</span><span class="val">…звонить Петрову…</span><span class="ar">→</span><span class="to">…Смирнову…</span>
+            <span class="src">tickets.meta</span><span class="val">alexey.petrov@…</span><span class="ar">→</span><span class="to">ilya.smirnov@…</span>
+            <span class="hmac">HMAC(ключ, «петров алексей») = <b>9f3c…e1a7</b> при каждом запуске</span>
+          </div>
+        </article>
+
+        <article class="tile t-fmt rv" style="--d:1">
+          <span class="kicker">Маски ввода</span>
+          <h3>Формат сохраняется</h3>
+          <p>Скобки, пробелы и дефисы остаются на месте. Поле с маской ввода и парсер логов увидят привычную строку.</p>
+          <div class="ex">
+            <div class="ln"><span class="from">+7 916 555-12-34</span><span class="ar">→</span><span class="to">+7 916 382-90-47</span></div>
+            <div class="ln"><span class="from">8 (903) 410-22-61</span><span class="ar">→</span><span class="to">8 (903) 157-36-08</span></div>
+            <div class="ln"><span class="from">89255550198</span><span class="ar">→</span><span class="to">89257214463</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="how">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow"><i>04</i>Как работает</span><h2>Четыре команды вместо проекта внедрения</h2></div>
+        <p>Правила лежат в репозитории рядом с кодом и проходят ревью. Копия собирается по расписанию или в CI, а результат проверяется повторным сканированием.</p>
+      </div>
+      <div class="how">
+        <div class="term rv" id="term">
+          <div class="term-top"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>staging — bash</span><span class="term-note">пример вывода</span></div>
+<pre><span class="g" data-g="1"><span class="p">$ </span><span class="c">dubler init --db postgres://replica/shop</span>
+<span class="k">  ✓</span><span class="o"> 42 таблицы · 17 колонок-кандидатов → </span><span class="a">dubler.yaml</span></span>
+<span class="g" data-g="2"><span class="p">$ </span><span class="c">dubler scan</span>
+<span class="o">  колонки ........... </span>11 с ПДн
+<span class="o">  свободный текст ... </span>6 полей<span class="o"> · </span>2 314 находок</span>
+<span class="g" data-g="3"><span class="p">$ </span><span class="c">dubler run --target postgres://staging/shop</span>
+<span class="o">  1 204 588 строк · связи сохранены</span>
+<span class="k">  ✓</span><span class="o"> повторный скан: </span>0 находок<span class="o"> · копия выпущена</span></span>
+<span class="g" data-g="4"><span class="p">$ </span><span class="c">dubler report --format pdf</span>
+<span class="o">  → </span><span class="a">report-2026-10-08.pdf</span><span class="o"> · приказ РКН №140</span></span>
+<span class="p">$ </span><span class="cursor" aria-hidden="true"></span></pre>
+        </div>
+        <div class="rv" style="--d:1">
+          <ol class="steps" id="steps">
+            <li data-step="1"><code>init</code><b>Подключение</b><span>К реплике или дампу. Кандидаты в ПДн — по названиям, типам и выборке значений. Правила сохраняются в YAML рядом с кодом.</span></li>
+            <li data-step="2"><code>scan</code><b>Поиск</b><span>Колонки и свободный текст: комментарии, заметки, jsonb. Для каждого поля вы подтверждаете метод подмены.</span></li>
+            <li data-step="3" class="gate"><code>run</code><b>Подмена и проверка <em>fail-closed</em></b><span>Правдоподобные значения с сохранением формата, падежа и связей. Если повторный скан находит больше порога, копия не выпускается.</span></li>
+            <li data-step="4"><code>report</code><b>Отчёт</b><span>Какие поля и какими методами обезличены, в терминах приказа РКН №140.</span></li>
+          </ol>
+          <p class="cron">Свежая копия каждую ночь — по cron или в CI</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="diff">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow"><i>05</i>Отличия</span><h2>Сделан для команды из&nbsp;десяти человек, а&nbsp;не&nbsp;для отдела внедрения</h2></div>
+        <p>Существующие решения продаются крупным компаниям через пилот и внедрение. Дублёр рассчитан на небольшие ИТ-команды, веб-студии и подрядчиков, которым чистая копия базы нужна сегодня.</p>
+      </div>
+      <div class="cmp rv" role="table" aria-label="Сравнение с корпоративными решениями">
+        <div class="cmp-row cmp-head" role="row">
+          <div role="columnheader">Критерий</div>
+          <div role="columnheader">Корпоративные решения<sup class="ref"><a href="#src-5">5</a></sup></div>
+          <div role="columnheader" class="us"><svg viewBox="0 0 24 24" aria-hidden="true"><rect fill="none" stroke="currentColor" stroke-width="2" x="2.5" y="2.5" width="13" height="13" rx="3.5"/><rect fill="currentColor" x="8.5" y="8.5" width="13" height="13" rx="3.5"/></svg>Дублёр</div>
+          <div role="columnheader">Итог</div>
+        </div>
+        <div class="cmp-row" role="row">
+          <div class="crit" role="rowheader">ПДн в свободном тексте<small>comment, note, jsonb</small></div>
+          <div class="corp na" role="cell">Не заявлено</div>
+          <div class="us us-val" role="cell">Главная функция: находит «Петрову» и телефон внутри комментария</div>
+          <div role="cell"><span class="vd adv">+ преимущество</span></div>
+        </div>
+        <div class="cmp-row" role="row">
+          <div class="crit" role="rowheader">Старт</div>
+          <div class="corp" role="cell">Продажа → пилот → внедрение</div>
+          <div class="us us-val" role="cell">Скачать бесплатное ядро и запустить за час</div>
+          <div role="cell"><span class="vd adv">+ преимущество</span></div>
+        </div>
+        <div class="cmp-row" role="row">
+          <div class="crit" role="rowheader">Для кого</div>
+          <div class="corp" role="cell">Крупные компании</div>
+          <div class="us us-val" role="cell">Команды 5–30 человек, self-service</div>
+          <div role="cell"><span class="vd adv">+ преимущество</span></div>
+        </div>
+        <div class="cmp-row" role="row">
+          <div class="crit" role="rowheader">Интеграция</div>
+          <div class="corp" role="cell">Собственная консоль</div>
+          <div class="us us-val" role="cell">CLI, правила в YAML в git, GitHub Actions и GitLab CI</div>
+          <div role="cell"><span class="vd adv">+ преимущество</span></div>
+        </div>
+        <div class="cmp-row" role="row">
+          <div class="crit" role="rowheader">Цена</div>
+          <div class="corp na" role="cell">Не публикуется</div>
+          <div class="us us-val" role="cell">На сайте. Ядро бесплатно</div>
+          <div role="cell"><span class="vd adv">+ преимущество</span></div>
+        </div>
+        <div class="cmp-row" role="row">
+          <div class="crit" role="rowheader">Связи между таблицами</div>
+          <div class="corp" role="cell">Сохраняются (заявлено у HFLabs)</div>
+          <div class="us us-val" role="cell">Сохраняются: детерминированная подмена через HMAC</div>
+          <div role="cell"><span class="vd par">= паритет</span></div>
+        </div>
+      </div>
+      <p class="fine">Корпоративные решения: HFLabs «Маскировщик», DataMask, SFERA (Т1), РЕСТАРТ, по открытым материалам на 6 октября 2026. «Не заявлено» значит, что функции нет в публичных описаниях.</p>
+    </div>
+  </section>
+
+  <section class="blk" id="plans">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="eyebrow"><i>06</i>Тарифы</span><h2>Открытое ядро и&nbsp;понятная цена на&nbsp;сайте</h2></div>
+        <p>Базовое обезличивание бесплатно. Платите за распознавание в свободном тексте и документы для проверок. Цены — ориентир, уточняем на пилотах.</p>
+      </div>
+      <div class="plans">
+        <article class="plan rv">
+          <h3>Ядро <small>open source</small></h3>
+          <div class="price">0 ₽<small>навсегда</small></div>
+          <ul><li>CLI и правила в YAML</li><li>PostgreSQL и MySQL</li><li>Форматные ПДн с контрольными суммами</li><li>Базовое распознавание имён</li></ul>
+          <span class="btn soon" aria-disabled="true">Скоро на GitHub</span>
+        </article>
+        <article class="plan feat rv" style="--d:1">
+          <h3>Команда <small>5–30 человек</small></h3>
+          <div class="price">5–15 тыс. ₽<small>в месяц за команду</small></div>
+          <ul><li>Всё из ядра</li><li>Модель для свободного текста</li><li>Отчёты по приказу РКН №140</li><li>Интеграция с CI и веб-интерфейс правил</li></ul>
+          <a class="btn" href="#contact">Запросить пилот</a>
+        </article>
+        <article class="plan rv" style="--d:2">
+          <h3>Компания <small>годовая лицензия</small></h3>
+          <div class="price">30–100 тыс. ₽<small>в месяц</small></div>
+          <ul><li>MS SQL и выгрузки 1С</li><li>Приоритетная поддержка</li><li>Помощь с настройкой</li></ul>
+          <a class="btn ghost" href="#contact">Обсудить</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="contact">
+    <div class="wrap contact">
+      <div class="rv">
+        <span class="eyebrow"><i>07</i>Пилот</span>
+        <h2>Покажем, что Дублёр нашёл бы в&nbsp;вашей базе</h2>
+        <p>Месяц бесплатно в обмен на обратную связь. Расскажите, какая у вас база, и мы пришлём инструкцию по запуску на реплике.</p>
+        <ul class="direct">
+          <li><span>Почта</span><a href="mailto:m.levanenko-kashirsky@yandex.ru" data-contact-email>m.levanenko-kashirsky@yandex.ru</a></li>
+          <li><span>Telegram</span><a href="https://t.me/n0ne_e" target="_blank" rel="noopener">@n0ne_e</a></li>
+          <li><span>Ответ</span><b>в течение рабочего дня</b></li>
+        </ul>
+      </div>
+      <form class="form rv" id="form" style="--d:1" novalidate>
+        <div class="fld">
+          <label for="db">База данных</label>
+          <select id="db" name="db"><option>PostgreSQL</option><option>MySQL</option><option>MS SQL</option><option>1С</option><option>Другая</option></select>
+        </div>
+        <div class="fld">
+          <label for="rows">Записей</label>
+          <select id="rows" name="rows"><option>до 100 тыс.</option><option selected>100 тыс. – 1 млн</option><option>1–10 млн</option><option>больше 10 млн</option></select>
+        </div>
+        <div class="fld wide">
+          <label for="email">Рабочая почта</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="cto@company.ru" required aria-describedby="emailErr">
+          <span class="err" id="emailErr" aria-live="polite"></span>
+        </div>
+        <div class="fld wide">
+          <label for="comment">Пара слов о проекте <span class="opt">необязательно</span></label>
+          <textarea id="comment" name="comment" rows="3" placeholder="Сколько стендов, где лежат ПДн, что уже пробовали"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="website">Сайт</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button class="btn" type="submit">Отправить заявку <span class="arr" aria-hidden="true">→</span></button>
+        <p class="status" id="formStatus" role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="back" x="2.5" y="2.5" width="13" height="13" rx="3.5"/><rect class="front" x="8.5" y="8.5" width="13" height="13" rx="3.5"/></svg>Дублёр</a>
+        <p class="tagline">Как дублёр в кино: выглядит как оригинал и принимает риск на себя.</p>
+      </div>
+      <nav class="foot-nav" aria-label="Разделы">
+        <a href="#demo">Демо</a><a href="#features">Возможности</a><a href="#how">Как работает</a><a href="#diff">Отличия</a><a href="#plans">Тарифы</a><a href="#contact">Пилот</a>
+      </nav>
+    </div>
+    <ol class="refs">
+      <li id="src-1"><span>«Гарда»: почти половина российских компаний переносит данные в тестовые среды без маскирования, специализированные средства применяют 3,1%. <a href="https://cisoclub.ru/garda-pochti-polovina-rossijskih-kompanij-perenosit-dannye-v-testovye-sredy-bez-maskirovanija" target="_blank" rel="noopener">CISOClub</a></span></li>
+      <li id="src-2"><span>Оборотные штрафы за утечки ПДн, ст. 13.11 КоАП РФ в редакции 2024 года.</span></li>
+      <li id="src-3"><span>Приказ Роскомнадзора №140 от 19.06.2025 о требованиях и методах обезличивания. <a href="https://www.garant.ru/products/ipo/prime/doc/412328220/" target="_blank" rel="noopener">Гарант</a></span></li>
+      <li id="src-4"><span>Just AI: динамическая анонимизация данных в Jay Guard, F1 до и после дообучения. <a href="https://habr.com/ru/companies/just_ai/articles/946392/" target="_blank" rel="noopener">Хабр</a></span></li>
+      <li id="src-5"><span>Корпоративные решения: <a href="https://habr.com/ru/news/732788/" target="_blank" rel="noopener">HFLabs «Маскировщик»</a>, <a href="https://d-mask.ru/" target="_blank" rel="noopener">DataMask</a>, SFERA (Т1), <a href="https://restart.re/solutions/data-masking-anonymization/" target="_blank" rel="noopener">РЕСТАРТ</a>. Открытые материалы на 06.10.2026.</span></li>
+    </ol>
+    <div class="giant" aria-hidden="true"><span class="g-back">Дублёр</span><span class="g-front">Дублёр</span></div>
+    <div class="foot-bottom"><span>© 2026 Дублёр</span><a href="#top">Наверх ↑</a></div>
+  </div>
+</footer>
+</body>
+</html>

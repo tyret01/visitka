@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Страница не найдена — Дублёр</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts.css">
+<style>
+/* Отдельная страница без общих стилей: на вложенных адресах относительные пути не сработают */
+:root{--paper:#f3f4f7;--ink:#0c1322;--ink-2:#465166;--muted:#788297;--line-2:#c5ccd8;--accent:#2a40f5;--surface:#fcfcfd}
+@media (prefers-color-scheme:dark){:root{--paper:#0a0e16;--ink:#e7ebf3;--ink-2:#a8b1c3;--muted:#717b90;--line-2:#2d3647;--accent:#8796ff;--surface:#10151f;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:32px 16px;background:var(--paper);color:var(--ink);font:16px/1.55 "Golos Text",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:520px;text-align:center}
+.code{position:relative;display:inline-block;font:600 clamp(96px,26vw,180px)/.9 "Geologica",system-ui,sans-serif;letter-spacing:-.06em}
+.code .b{color:transparent;-webkit-text-stroke:1.2px var(--line-2)}
+.code .f{position:absolute;inset:0;color:var(--accent);transform:translate(.045em,.045em)}
+h1{margin:40px 0 12px;font:600 26px/1.2 "Geologica",system-ui,sans-serif;letter-spacing:-.03em}
+p{margin:0;color:var(--ink-2)}
+small{display:block;margin-top:28px;font:12.5px "JetBrains Mono",monospace;color:var(--muted)}
+a{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:14px 22px;border-radius:12px;background:var(--accent);color:var(--surface);font-weight:600;text-decoration:none;transition:filter .15s,transform .15s}
+a:hover{filter:brightness(1.08);transform:translateY(-1px)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <div class="code" aria-hidden="true"><span class="b">404</span><span class="f">404</span></div>
+  <h1>Такой страницы нет</h1>
+  <p>Как и настоящих клиентов в копии, которую собрал Дублёр.</p>
+  <a href="/">На главную <span aria-hidden="true">→</span></a>
+  <small>dubler scan: 0 находок по этому адресу</small>
+</main>
+</body>
+</html>
